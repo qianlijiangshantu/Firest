@@ -10,6 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.DigestUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -46,6 +47,12 @@ public class UsersService {
         String currentTime = format.format( dateObj );
         users.setUpdateTime(currentTime);
         //2021/10/19 fan add end
+
+        //2022/6/10 wang add start
+        //隐藏密码
+        String inputMD = users.getPassword();
+        users.setPassword(DigestUtils.md5DigestAsHex(inputMD.getBytes()));
+        
         //持久化用户信息
         int insert = usersMapper.insert(users);
         if(insert<0){   //注册失败
@@ -69,6 +76,10 @@ public class UsersService {
         }
         //密码经行匹配验证
         for (Users usersDB : usersByAccount) {
+        	// 2022/06/10
+        	//转化密码
+        	String a =users.getPassword();
+        	users.setPassword(DigestUtils.md5DigestAsHex(a.getBytes()));
             if(usersDB.getPassword().equals(users.getPassword())){  //匹配成功
                 //设置session
                 UserContextUtil.setUser(usersDB);

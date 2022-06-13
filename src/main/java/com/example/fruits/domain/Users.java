@@ -40,5 +40,6 @@ public class Users {
     @JsonIgnore
     public Integer getuId() {
         return uId;
+        
     }
 }

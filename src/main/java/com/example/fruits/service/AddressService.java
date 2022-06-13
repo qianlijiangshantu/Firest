@@ -25,7 +25,8 @@ public class AddressService {
         //获取用信息
         Users user = UserContextUtil.getUser();
         //根据用户id到数据库地址表中查询信息
-        List<Address> addressList = addressMapper.select(new Address(user.getuId()));
+//        List<Address> addressList = addressMapper.select(new Address(user.getuId()));
+        List<Address> addressList = addressMapper.fingAddress(user.getuId());
         //返回的结果
         List<AddressVo> result = new ArrayList<>();
         for (Address address : addressList) {
@@ -98,6 +99,7 @@ public class AddressService {
             throw new LyException(ExceptionEnum.ADDRESS_INFO_INVALID);
         }
         addressMapper.deleteAddress(addId);
+        
 //        int flag = addressMapper.deleteByPrimaryKey(addId);
 //        if(flag<=0){
 //            throw new LyException(ExceptionEnum.DELETE_ADDRESS_FAIL);

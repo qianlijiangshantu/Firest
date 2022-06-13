@@ -25,5 +25,4 @@ public  class AddressVo{
         this.addressDetail = address.getAddr()+" "+address.getAddDetails();
         this.isDefault = address.getIsDefault();
     }
-
 }
